@@ -20,6 +20,7 @@
     "mongoose": "^8.5.2",
     "nodemailer": "^6.9.14",
     "razorpay": "^2.9.6",
+    "socket.io": "^4.8.3",
     "twilio": "^5.2.3",
     "xss-clean": "^0.1.4"
   },

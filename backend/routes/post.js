@@ -8,5 +8,6 @@ router.post('/', verifyToken, postController.createPost);
 router.get('/', verifyToken, postController.getPosts);
 router.put('/:id/resolve', verifyToken, postController.resolvePost);
 router.put('/:id/join', verifyToken, postController.joinCommunity);
+router.put('/:id/leave', verifyToken, postController.leaveCommunity);
 
 module.exports = router;

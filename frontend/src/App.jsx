@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { SocketProvider } from './context/SocketContext';
 
 // Pages
 import Home from './pages/Home';
@@ -70,30 +71,32 @@ function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <BrowserRouter>
-          <div className="App selection:bg-primary-500 selection:text-white">
-            <Layout>
-              <AnimatePresence mode="wait">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/otp-verification" element={<OTPVerification />} />
-                  
-                  <Route path="/find-buddies" element={<ProtectedRoute><FindBuddies /></ProtectedRoute>} />
-                  <Route path="/become-provider" element={<ProtectedRoute><BecomeProvider /></ProtectedRoute>} />
-                  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                  <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
-                  <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
-                  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                  <Route path="/buddy/:id" element={<ProtectedRoute><PublicProfile /></ProtectedRoute>} />
-                  
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </AnimatePresence>
-            </Layout>
-          </div>
-        </BrowserRouter>
+        <SocketProvider>
+          <BrowserRouter>
+            <div className="App selection:bg-primary-500 selection:text-white">
+              <Layout>
+                <AnimatePresence mode="wait">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/otp-verification" element={<OTPVerification />} />
+                    
+                    <Route path="/find-buddies" element={<ProtectedRoute><FindBuddies /></ProtectedRoute>} />
+                    <Route path="/become-provider" element={<ProtectedRoute><BecomeProvider /></ProtectedRoute>} />
+                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+                    <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                    <Route path="/buddy/:id" element={<ProtectedRoute><PublicProfile /></ProtectedRoute>} />
+                    
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </AnimatePresence>
+              </Layout>
+            </div>
+          </BrowserRouter>
+        </SocketProvider>
       </AuthProvider>
     </ErrorBoundary>
   );

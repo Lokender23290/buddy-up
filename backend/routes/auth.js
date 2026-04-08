@@ -12,10 +12,12 @@ router.post('/verify-otp', authController.verifyOTP);
 router.get('/current-user', verifyToken, authController.getCurrentUser);
 router.get('/users', verifyToken, authController.getAllUsers);
 router.put('/profile', verifyToken, authController.updateProfile);
+router.put('/change-password', verifyToken, authController.changePassword);
 router.post('/connect/:id', verifyToken, authController.sendRequest);
 router.post('/accept/:id', verifyToken, authController.acceptRequest);
 router.post('/reject/:id', verifyToken, authController.rejectRequest);
 router.get('/connections', verifyToken, authController.getConnections);
+router.put('/notifications/read', verifyToken, authController.markNotificationsRead);
 router.get('/user/:id', verifyToken, authController.getUserById);
 
 module.exports = router;

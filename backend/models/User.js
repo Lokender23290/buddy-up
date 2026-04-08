@@ -37,7 +37,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  username: {
+    type: String,
+    unique: true,
+    sparse: true,
+    trim: true,
+  },
   bio: {
+    type: String,
+    default: '',
+    maxlength: 500,
+  },
+  location: {
     type: String,
     default: '',
   },
@@ -45,6 +56,14 @@ const userSchema = new mongoose.Schema({
     type: String,
   }],
   interests: [{
+    type: String,
+  }],
+  lookingFor: {
+    type: String,
+    enum: ['Friends', 'Study Partner', 'Gym Buddy', 'Project Collaborator', 'Mentor', 'Expertise', ''],
+    default: '',
+  },
+  availability: [{
     type: String,
   }],
   college: {
@@ -58,6 +77,19 @@ const userSchema = new mongoose.Schema({
   year: {
     type: String,
     trim: true,
+  },
+  otpEnabled: {
+    type: Boolean,
+    default: false,
+  },
+  preferences: {
+    theme: { type: String, enum: ['light', 'dark'], default: 'dark' },
+    privacy: { type: String, enum: ['Public', 'Private'], default: 'Public' },
+    notifications: {
+      email: { type: Boolean, default: true },
+      push: { type: Boolean, default: true },
+      sms: { type: Boolean, default: false }
+    }
   },
   connections: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -94,6 +126,18 @@ const userSchema = new mongoose.Schema({
     bankName: { type: String, trim: true, default: '' },
     isAuthorized: { type: Boolean, default: false },
     authorizedAt: { type: Date }
+  },
+  isOnline: {
+    type: Boolean,
+    default: false
+  },
+  lastSeen: {
+    type: Date,
+    default: Date.now
+  },
+  notificationLastRead: {
+    type: Date,
+    default: Date.now
   }
 }, { timestamps: true });
 

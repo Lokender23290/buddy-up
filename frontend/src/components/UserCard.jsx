@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Mail, Briefcase, PlusCircle, CheckCircle, Clock, DollarSign } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import { toast } from 'react-hot-toast';
 
 const UserCard = ({ user: targetUser }) => {
   const { user: currentUser, sendConnectionRequest } = useAuth();
+  const { isUserOnline } = useSocket();
   const [loading, setLoading] = useState(false);
   const [requestSent, setRequestSent] = useState(currentUser?.sentRequests?.includes(targetUser._id));
 
@@ -40,7 +42,9 @@ const UserCard = ({ user: targetUser }) => {
       
       <Link to={`/buddy/${targetUser._id}`} className="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-700 rounded-2xl mb-4 flex items-center justify-center shadow-lg transform rotate-3 group-hover:rotate-0 transition-all duration-300 relative cursor-pointer">
         <span className="text-white text-3xl font-black uppercase tracking-widest">{targetUser.name[0]}</span>
-        <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 border-4 border-background-dark rounded-full group-hover:scale-110 transition-transform shadow-[0_0_10px_rgba(34,197,94,0.3)]"></div>
+        {(isUserOnline(targetUser._id) || targetUser.isOnline) && (
+          <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 border-4 border-background-dark rounded-full group-hover:scale-110 transition-transform shadow-[0_0_10px_rgba(34,197,94,0.3)]"></div>
+        )}
       </Link>
       
       <Link to={`/buddy/${targetUser._id}`} className="text-xl font-black mb-1 group-hover:text-primary-400 transition-colors uppercase tracking-tight cursor-pointer">
@@ -49,6 +53,10 @@ const UserCard = ({ user: targetUser }) => {
       <div className="flex items-center text-[10px] text-gray-400 mb-2 font-black uppercase tracking-widest opacity-70">
         <Briefcase size={12} className="mr-1 text-primary-400" />
         {targetUser.branch || 'Buddy'} · {targetUser.year || 'N/A'}
+      </div>
+      <div className={`text-[8px] font-black uppercase tracking-[0.2em] mb-4 flex items-center ${isUserOnline(targetUser._id) || targetUser.isOnline ? 'text-green-500' : 'text-gray-600 opacity-50'}`}>
+        <span className={`w-1 h-1 rounded-full mr-1.5 ${isUserOnline(targetUser._id) || targetUser.isOnline ? 'bg-green-500 animate-pulse' : 'bg-gray-600'}`}></span>
+        {isUserOnline(targetUser._id) || targetUser.isOnline ? 'Identity Active' : 'Node Offline'}
       </div>
 
       {targetUser.isProvider && targetUser.hourlyRate > 0 && (

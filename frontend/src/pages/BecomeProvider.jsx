@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Zap, Rocket, Star, CheckCircle, Smartphone, Globe, Mail, MessageSquare, Phone, Info, Briefcase, IndianRupee, CreditCard, HelpCircle, Save, X, Settings, Loader } from 'lucide-react';
+import { 
+  Shield, Zap, Rocket, Star, CheckCircle, Briefcase, 
+  IndianRupee, X, Loader, ShieldCheck, Cpu, 
+  Layers, ArrowRight, Target, TrendingUp, Info
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -36,6 +40,8 @@ const BecomeProvider = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!formData.hourlyRate) return toast.error('Authority rate required for monetization');
+        
         setLoading(true);
         const loadId = toast.loading('Synchronizing Provider Authority...');
         try {
@@ -52,8 +58,7 @@ const BecomeProvider = () => {
             toast.success('Authority Escalated: Provider Rights Active', { id: loadId });
             setTimeout(() => navigate('/dashboard'), 1500);
         } catch (error) {
-            const errDetails = error.response?.data?.message || error.message || 'Check Connection';
-            toast.error(`Authority Sync Failed: ${errDetails}`, { id: loadId });
+            toast.error(error.response?.data?.message || 'Authority Sync Failed', { id: loadId });
         } finally {
             setLoading(false);
         }
@@ -62,120 +67,198 @@ const BecomeProvider = () => {
     const isUpdateMode = user?.isProvider;
 
     return (
-        <div className="max-w-7xl mx-auto px-6">
-            <header className="flex flex-col md:flex-row items-center justify-between mb-20 animate-fade-in text-center md:text-left">
-                <div>
-                   <span className="flex items-center space-x-2 px-3 py-1 bg-primary-600/10 text-primary-400 text-[8px] font-black uppercase tracking-widest rounded-full border border-primary-500/20 mb-3 w-fit mx-auto md:mx-0">
-                      <Zap size={10} className="animate-pulse" />
-                      <span>{isUpdateMode ? 'Update Pro Authority' : 'Request Pro Authority Handshake'}</span>
-                   </span>
-                   <h1 className="text-4xl md:text-7xl font-black mb-1 uppercase tracking-tighter tracking-widest leading-none">
-                       {isUpdateMode ? 'Expand your' : 'Become a'} <span className="gradient-text italic">Provider</span>
-                   </h1>
-                   <p className="text-gray-400 font-bold italic opacity-70 uppercase tracking-widest text-[10px] max-w-lg mt-4 leading-relaxed">
-                       {isUpdateMode 
-                        ? 'Update your category, rate, or add more skills to offer a wider range of academic support.'
-                        : 'Monetize your campus expertise legacy by helping fellow buddies with the skills you\'ve mastered.'}
-                   </p>
-                </div>
-            </header>
+        <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
+            <div className="flex flex-col lg:flex-row gap-16 items-start">
+                
+                {/* Visual Narrative Side */}
+                <div className="lg:w-1/2 space-y-12">
+                    <header className="space-y-6">
+                        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                            <span className="flex items-center space-x-2 px-4 py-1.5 bg-primary-600/10 text-primary-400 text-[9px] font-black uppercase tracking-[0.3em] rounded-full border border-primary-500/20 w-fit">
+                                <Zap size={12} className="animate-pulse" />
+                                <span>Authority Escalation Matrix</span>
+                            </span>
+                        </motion.div>
+                        <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85]">
+                            {isUpdateMode ? 'EXpanding' : 'INITIATING'} <br /> 
+                            <span className="gradient-text italic">Pro Authority</span>
+                        </h1>
+                        <p className="text-gray-500 font-bold italic uppercase tracking-widest text-[11px] max-w-lg leading-relaxed opacity-70">
+                            {isUpdateMode 
+                                ? 'Refining your professional identity node to dominate the campus marketplace with enhanced specializations.'
+                                : 'Transition from a consumer to an Authority Node. Monetize your expertise and influence the campus ledger.'}
+                        </p>
+                    </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-                <div className="space-y-12">
-                   <Feature num="01" icon={Briefcase} title="List Your Expertise" desc="Select categories and list specialized skills that you want to offer to the campus network." />
-                   <Feature num="02" icon={IndianRupee} title="Set Your Rate" desc="Decide your credit per hour value. Higher ratings allow for escalation of your authority level." />
-                   <Feature num="03" icon={Star} title="Build Legacy" desc="Every successful sync handshake boosts your reputation in the campus ranking." />
-                </div>
-
-                <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="glass-card p-12 relative overflow-hidden shadow-2xl border-primary-500/20">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600/10 blur-[120px] -z-10 bg-blue-600/10"></div>
-                    <form onSubmit={handleSubmit} className="space-y-10">
-                        <div className="space-y-6">
-                            <div>
-                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2 block ml-1 italic">Provider Category</label>
-                                <select 
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-sm font-black focus:ring-2 focus:ring-primary-600 outline-none text-white tracking-widest appearance-none shadow-xl"
-                                    value={formData.providerCategory}
-                                    onChange={(e) => setFormData({...formData, providerCategory: e.target.value})}
-                                >
-                                    <option value="Study">Study Session</option>
-                                    <option value="Project">Project Sync</option>
-                                    <option value="Sports">Event / Sports</option>
-                                    <option value="Tech">Technical Support</option>
-                                </select>
+                    <div className="space-y-8 relative">
+                        <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-primary-600/40 via-primary-600/10 to-transparent -z-10"></div>
+                        <StepItem 
+                            num="01" 
+                            icon={Target} 
+                            title="Define Expertise Area" 
+                            desc="Categorize your authority to align with specific campus needs and mission sets." 
+                        />
+                        <StepItem 
+                            num="02" 
+                            icon={TrendingUp} 
+                            title="Set Marketplace Value" 
+                            desc="Quantify your expertise legay in credits per hour. Higher rankings allow for premium rate tiers." 
+                        />
+                        <StepItem 
+                            num="03" 
+                            icon={ShieldCheck} 
+                            title="Execute Compliance" 
+                            desc="Commit to the BuddyUp high-integrity sync protocol for superior campus reputation." 
+                        />
+                    </div>
+                    
+                    <div className="glass-card p-8 border-primary-500/10 bg-primary-600/5 relative overflow-hidden group">
+                        <Layers className="absolute -bottom-6 -right-6 text-primary-500/5 group-hover:scale-110 transition-transform duration-700" size={160} />
+                        <div className="flex items-center space-x-6 relative z-10">
+                            <div className="p-4 bg-primary-600/20 rounded-2xl text-primary-400">
+                                <Info size={24} />
                             </div>
                             <div>
-                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-4 block ml-1 italic">Active Specializations</label>
-                                
-                                {activeSkills.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                        {activeSkills.map(skill => (
-                                            <span key={skill} className="px-4 py-2 bg-primary-600/20 text-primary-300 text-[9px] font-black uppercase tracking-widest rounded-lg border border-primary-500/30 flex items-center shadow-lg">
-                                                {skill}
-                                                <button type="button" onClick={() => handleRemoveSkill(skill)} className="ml-2 hover:text-red-400 transition-colors">
-                                                    <X size={12} />
-                                                </button>
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
-
-                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2 block ml-1 italic mt-6">Add New Skills (Comma Separated)</label>
-                                <div className="text-left">
-                                    <input 
-                                        type="text" 
-                                        placeholder="e.g. PYTHON, CLOUD COMPUTING..." 
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-xs font-black focus:ring-2 focus:ring-primary-600 outline-none text-white tracking-widest shadow-xl uppercase"
-                                        value={formData.skills}
-                                        onChange={(e) => setFormData({...formData, skills: e.target.value})}
-                                    />
-                                    <span className="text-[8px] font-bold uppercase tracking-widest opacity-60 text-gray-400 ml-2 mt-2 block">These will be appended to your active skills above.</span>
-                                </div>
-                            </div>
-                            <div>
-                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2 block ml-1 italic">Your Rate (Credits/Hour)</label>
-                                <div className="relative">
-                                    <IndianRupee className="absolute left-5 top-1/2 -translate-y-1/2 text-primary-400" size={18} />
-                                    <input 
-                                        type="number" 
-                                        placeholder="500" 
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-xl font-black italic focus:ring-2 focus:ring-primary-600 outline-none text-white shadow-xl"
-                                        value={formData.hourlyRate}
-                                        onChange={(e) => setFormData({...formData, hourlyRate: e.target.value})}
-                                        required
-                                    />
-                                </div>
+                                <h4 className="text-[10px] font-black uppercase tracking-widest text-white mb-1 italic">Identity Impact</h4>
+                                <p className="text-[9px] font-bold text-gray-500 uppercase tracking-tighter leading-relaxed italic pr-12">Providers with matched skillsets see a 300% increase in connection handshakes within the first week.</p>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <button 
-                            disabled={loading}
-                            className="btn-primary w-full py-6 text-sm font-black uppercase tracking-[0.2em] shadow-[0_20px_50px_rgba(139,92,246,0.3)] flex items-center justify-center transition-all group"
-                        >
-                            {loading ? <Loader className="animate-spin mr-3" size={18} /> : <Rocket size={18} className="mr-3 group-hover:rotate-12 transition-all" />}
-                            Execute Escalation
-                        </button>
-                        <p className="text-[9px] text-center text-gray-600 font-extrabold uppercase italic px-10 leading-relaxed opacity-60">
-                            By escalating your authority, you agree to comply with the Campus Buddy Protocol and maintaining high-integrity syncs.
-                        </p>
-                    </form>
+                {/* Authority Form Side */}
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    className="lg:w-1/2 w-full"
+                >
+                    <div className="glass-card p-12 md:p-16 relative overflow-hidden shadow-2xl border-primary-500/20">
+                        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-600/10 blur-[150px] -z-10 bg-blue-600/20"></div>
+                        
+                        <form onSubmit={handleSubmit} className="space-y-12">
+                            <div className="space-y-10">
+                                <div>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 mb-4 block ml-1 italic">Primary Authority Category</label>
+                                    <div className="relative group">
+                                        <Briefcase className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-primary-400 transition-colors pointer-events-none" size={20} />
+                                        <select 
+                                            className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] py-6 pl-16 pr-12 text-sm font-black focus:ring-2 focus:ring-primary-600 outline-none text-white tracking-[0.2em] appearance-none shadow-inner transition-all hover:border-white/20"
+                                            value={formData.providerCategory}
+                                            onChange={(e) => setFormData({...formData, providerCategory: e.target.value})}
+                                        >
+                                            <option value="Study" className="bg-background-dark">STUDY SESSION</option>
+                                            <option value="Project" className="bg-background-dark">PROJECT SYNC</option>
+                                            <option value="Sports" className="bg-background-dark">EVENT / SPORTS</option>
+                                            <option value="Tech" className="bg-background-dark">TECH SUPPORT</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 mb-6 block ml-1 italic">Identity Specializations</label>
+                                    
+                                    <div className="space-y-6">
+                                        {activeSkills.length > 0 && (
+                                            <div className="flex flex-wrap gap-3">
+                                                {activeSkills.map(skill => (
+                                                    <motion.span 
+                                                        key={skill} 
+                                                        layout
+                                                        initial={{ scale: 0.8, opacity: 0 }}
+                                                        animate={{ scale: 1, opacity: 1 }}
+                                                        className="px-5 py-2.5 bg-primary-600/10 text-primary-300 text-[10px] font-black uppercase tracking-widest rounded-xl border border-primary-500/20 flex items-center shadow-xl group/tag"
+                                                    >
+                                                        {skill}
+                                                        <button type="button" onClick={() => handleRemoveSkill(skill)} className="ml-3 hover:text-red-400 transition-colors">
+                                                            <X size={14} />
+                                                        </button>
+                                                    </motion.span>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        <div className="relative group">
+                                            <Cpu className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-primary-400 transition-colors" size={20} />
+                                            <input 
+                                                type="text" 
+                                                placeholder="PYTHON, REACT, NODE, AI..." 
+                                                className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] py-6 pl-16 pr-8 text-xs font-black focus:ring-2 focus:ring-primary-600 outline-none text-white tracking-widest shadow-inner uppercase transition-all"
+                                                value={formData.skills}
+                                                onChange={(e) => setFormData({...formData, skills: e.target.value})}
+                                            />
+                                            <div className="p-4 mt-3 bg-primary-500/5 rounded-2xl border border-white/5">
+                                                <p className="text-[9px] font-bold uppercase tracking-widest opacity-60 text-gray-500 flex items-center italic">
+                                                    <Info size={12} className="mr-2 text-primary-400" /> Use commas to separate multi-node skills.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 mb-4 block ml-1 italic">Operational Rate (Credits/Hour)</label>
+                                    <div className="relative group">
+                                        <div className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary-600/20 rounded-xl flex items-center justify-center text-primary-400">
+                                            <IndianRupee size={20} />
+                                        </div>
+                                        <input 
+                                            type="number" 
+                                            placeholder="500" 
+                                            className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] py-7 pl-20 pr-8 text-3xl font-black italic focus:ring-2 focus:ring-primary-600 outline-none text-white shadow-inner transition-all hover:border-white/20"
+                                            value={formData.hourlyRate}
+                                            onChange={(e) => setFormData({...formData, hourlyRate: e.target.value})}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button 
+                                disabled={loading}
+                                className="btn-primary w-full py-8 text-[11px] font-black uppercase tracking-[0.4em] shadow-[0_20px_60px_rgba(99,102,241,0.3)] flex items-center justify-center transition-all group overflow-hidden relative"
+                            >
+                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                {loading ? (
+                                    <Loader className="animate-spin mr-3" size={20} />
+                                ) : (
+                                    <>
+                                        <Rocket size={20} className="mr-3 group-hover:rotate-12 group-hover:-translate-y-1 transition-all" />
+                                        {isUpdateMode ? 'Update Authority' : 'Execute Escalation'}
+                                    </>
+                                )}
+                            </button>
+                            
+                            <p className="text-[10px] text-center text-gray-600 font-extrabold uppercase italic px-6 leading-relaxed opacity-50">
+                                Authority escalation requires compliance with the 
+                                <span className="text-primary-500/80 mx-1 cursor-pointer hover:underline">Campus Identity Protocol</span> 
+                                and maintaining verified high-integrity syncs.
+                            </p>
+                        </form>
+                    </div>
                 </motion.div>
             </div>
         </div>
     );
 };
 
-const Feature = ({ num, icon: Icon, title, desc }) => (
-    <div className="flex items-start space-x-8 group">
-        <div className="text-5xl font-black text-primary-600/20 group-hover:text-primary-600/40 transition-colors italic">{num}</div>
-        <div>
-           <div className="flex items-center mb-3">
-              <Icon size={20} className="text-primary-400 mr-3" />
-              <h3 className="text-xl font-black uppercase tracking-tight">{title}</h3>
-           </div>
-           <p className="text-sm font-extrabold text-gray-500 uppercase italic opacity-60 leading-relaxed max-w-md">{desc}</p>
+const StepItem = ({ num, icon: Icon, title, desc }) => (
+    <motion.div 
+        whileHover={{ x: 10 }}
+        className="flex items-start space-x-8 group cursor-default"
+    >
+        <div className="relative">
+            <div className="w-12 h-12 bg-background-dark border border-white/10 rounded-2xl flex items-center justify-center text-primary-400 z-10 relative group-hover:border-primary-500/50 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)] transition-all">
+                <Icon size={22} className="group-hover:scale-110 transition-transform" />
+            </div>
+            <div className="absolute top-0 right-0 -mr-4 -mt-4 text-[40px] font-black text-white/5 italic select-none group-hover:text-primary-600/10 transition-colors">
+                {num}
+            </div>
         </div>
-    </div>
+        <div className="pt-1">
+            <h3 className="text-base font-black uppercase tracking-tight mb-2 group-hover:text-primary-400 transition-colors italic">{title}</h3>
+            <p className="text-[10px] font-extrabold text-gray-500 uppercase italic opacity-60 leading-relaxed max-w-sm">{desc}</p>
+        </div>
+    </motion.div>
 );
 
 export default BecomeProvider;

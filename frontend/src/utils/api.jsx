@@ -25,9 +25,11 @@ export const authAPI = {
   getCurrentUser: () => api.get('/auth/current-user'),
   getAllUsers: () => api.get('/auth/users'),
   updateProfile: (data) => api.put('/auth/profile', data),
+  changePassword: (data) => api.put('/auth/change-password', data),
   sendConnectionRequest: (userId) => api.post(`/auth/connect/${userId}`),
   acceptConnectionRequest: (userId) => api.post(`/auth/accept/${userId}`),
   rejectConnectionRequest: (userId) => api.post(`/auth/reject/${userId}`),
+  markNotificationsRead: () => api.put('/auth/notifications/read'),
   getConnections: () => api.get('/auth/connections'),
   getUserById: (id) => api.get(`/auth/user/${id}`),
 };
@@ -50,6 +52,7 @@ export const postAPI = {
   getPosts: () => api.get('/posts'),
   resolvePost: (id) => api.put(`/posts/${id}/resolve`),
   joinPost: (id) => api.put(`/posts/${id}/join`),
+  leavePost: (id) => api.put(`/posts/${id}/leave`),
 };
 
 export default api;

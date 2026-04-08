@@ -79,3 +79,23 @@ exports.joinCommunity = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Leave Community Post
+// @route   PUT /api/posts/:id/leave
+exports.leaveCommunity = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return next(new ErrorResponse('Community not found', 404));
+
+    if (!post.members.includes(req.user.id)) {
+      return res.status(400).json({ success: false, message: 'Not a member of this community' });
+    }
+
+    post.members = post.members.filter(member => member.toString() !== req.user.id);
+    await post.save();
+
+    res.json({ success: true, message: 'Left community successfully', post });
+  } catch (error) {
+    next(error);
+  }
+};

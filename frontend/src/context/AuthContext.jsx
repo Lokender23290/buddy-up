@@ -112,6 +112,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const changePassword = async (data) => {
+    try {
+      const response = await authAPI.changePassword(data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const sendConnectionRequest = async (id) => {
     try {
       const response = await authAPI.sendConnectionRequest(id);
@@ -154,6 +163,15 @@ export const AuthProvider = ({ children }) => {
       return response.data;
     } catch (error) {
       throw error;
+    }
+  };
+
+  const markNotificationsRead = async () => {
+    try {
+      await authAPI.markNotificationsRead();
+      await fetchCurrentUser();
+    } catch (error) {
+      console.error('Notification sync failed', error);
     }
   };
 
@@ -220,6 +238,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const leavePost = async (postId) => {
+    try {
+      const response = await postAPI.leavePost(postId);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const value = {
     user,
     token,
@@ -232,6 +259,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     verifyOTP,
     updateProfile,
+    changePassword,
+    markNotificationsRead,
     fetchCurrentUser,
     fetchUserById,
     sendConnectionRequest,
@@ -244,7 +273,8 @@ export const AuthProvider = ({ children }) => {
     createPost,
     getPosts,
     resolvePost,
-    joinPost
+    joinPost,
+    leavePost
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -76,13 +76,22 @@ app.use('/api/posts', postRoutes);
 // Global Error Handler (MUST BE LAST)
 app.use(errorHandler);
 
+const http = require('http');
+const { initSocket } = require('./utils/socket');
+
+const server = http.createServer(app);
+const io = initSocket(server);
+
+// Attach io to request for use in controllers if needed
+app.set('io', io);
+
 const PORT = process.env.PORT || 5001;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/auth_db';
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('MongoDB connected');
-    app.listen(PORT, '0.0.0.0', () => {
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running on 0.0.0.0:${PORT} for network access`);
     });
   })

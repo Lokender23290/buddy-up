@@ -257,14 +257,37 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const allowedUpdates = ['name', 'bio', 'skills', 'interests', 'college', 'branch', 'year', 'isProvider', 'hourlyRate', 'providerCategory'];
+    const allowedUpdates = ['name', 'bio', 'skills', 'interests', 'college', 'branch', 'year', 'isProvider', 'hourlyRate', 'providerCategory', 'username', 'location', 'lookingFor', 'availability', 'otpEnabled', 'preferences'];
     const updates = {};
     Object.keys(req.body).forEach(key => { if (allowedUpdates.includes(key)) updates[key] = req.body[key]; });
+
+    if (updates.username) {
+        const existingUsername = await User.findOne({ username: updates.username, _id: { $ne: req.user.id } });
+        if (existingUsername) return next(new ErrorResponse('Username is already claimed in the identity matrix', 400));
+    }
+
     const user = await User.findByIdAndUpdate(req.user.id, updates, { new: true, runValidators: true }).select('-password');
     res.json({ success: true, user });
   } catch (error) {
     next(error);
   }
+};
+
+exports.changePassword = async (req, res, next) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const user = await User.findById(req.user.id);
+        
+        if (!(await user.comparePassword(currentPassword))) {
+            return next(new ErrorResponse('Current identity credentials invalid', 401));
+        }
+
+        user.password = newPassword;
+        await user.save();
+        res.json({ success: true, message: 'Identity Vault Credentials Updated' });
+    } catch (error) {
+        next(error);
+    }
 };
 
 exports.sendRequest = async (req, res, next) => {
@@ -286,6 +309,15 @@ exports.sendRequest = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.markNotificationsRead = async (req, res, next) => {
+    try {
+        await User.findByIdAndUpdate(req.user.id, { notificationLastRead: Date.now() });
+        res.json({ success: true, message: 'Notification ledger synchronized' });
+    } catch (error) {
+        next(error);
+    }
 };
 
 exports.acceptRequest = async (req, res, next) => {

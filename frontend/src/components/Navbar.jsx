@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout, token } = useAuth();
+  const { user, logout, token, markNotificationsRead } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -47,15 +47,23 @@ const Navbar = () => {
   }
 
   const totalNotifCount = (user?.pendingRequests?.length || 0) + (user?.sentRequests?.length || 0) + (user?.connections?.length || 0);
-  const [hasUnread, setHasUnread] = useState(false);
-  const [lastNotifCount, setLastNotifCount] = useState(totalNotifCount);
+  
+  // Persistence logic: Red dot only if user hasn't seen the CURRENT batch
+  const STORAGE_KEY = `notif_seen_${user?._id || user?.id}`;
+  const [seenCount, setSeenCount] = useState(() => Number(localStorage.getItem(STORAGE_KEY)) || 0);
+  
+  const hasUnread = totalNotifCount > seenCount;
 
-  useEffect(() => {
-    if (totalNotifCount > lastNotifCount) {
-      setHasUnread(true);
+  const handleOpenNotif = async () => {
+    if (!isNotifOpen) {
+        setIsNotifOpen(true);
+        setSeenCount(totalNotifCount);
+        localStorage.setItem(STORAGE_KEY, totalNotifCount);
+        await markNotificationsRead();
+    } else {
+        setIsNotifOpen(false);
     }
-    setLastNotifCount(totalNotifCount);
-  }, [totalNotifCount, lastNotifCount]);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -146,11 +154,11 @@ const Navbar = () => {
             <>
               <div className="relative" ref={notifRef}>
                 <button 
-                  onClick={() => { setIsNotifOpen(!isNotifOpen); setHasUnread(false); }}
+                  onClick={handleOpenNotif}
                   className="p-2.5 text-gray-400 hover:text-primary-400 hover:bg-white/5 rounded-xl transition-all relative"
                 >
                   <Bell size={20} />
-                  {hasUnread && notifications.length > 0 && (
+                  {hasUnread && (
                     <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]"></span>
                   )}
                 </button>

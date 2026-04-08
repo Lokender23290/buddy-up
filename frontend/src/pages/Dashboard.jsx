@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { LayoutDashboard, Users, Send, Settings, Bell, Star, MoreVertical, Plus, Zap, Shield, Rocket, ClipboardList, Check, X, UserPlus, ArrowRight, Wallet, Loader, Globe } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import { toast } from 'react-hot-toast';
 
 const Dashboard = () => {
-  const { user, acceptConnectionRequest, rejectConnectionRequest, getAllUsers, fetchCurrentUser, createPost, getPosts, resolvePost, joinPost } = useAuth();
+  const { user, acceptConnectionRequest, rejectConnectionRequest, getAllUsers, fetchCurrentUser, createPost, getPosts, resolvePost, joinPost, leavePost } = useAuth();
+  const { isUserOnline } = useSocket();
   const [pendingBuddies, setPendingBuddies] = useState([]);
   const [broadcasts, setBroadcasts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -102,6 +104,17 @@ const Dashboard = () => {
     }
   };
 
+  const handleLeaveCommunity = async (postId) => {
+    const loadId = toast.loading('Detaching from Community Node...');
+    try {
+      await leavePost(postId);
+      toast.success('Successfully Left Community', { id: loadId });
+      fetchData();
+    } catch (e) {
+      toast.error(e.response?.data?.message || 'Termination Failed', { id: loadId });
+    }
+  };
+
   const stats = [
     { id: 'requests', label: 'Pending Invitations', value: user?.pendingRequests?.length || 0, icon: UserPlus, color: 'text-yellow-400' },
     { id: 'buddies', label: 'Active Buddies', value: user?.connections?.length || 0, icon: Users, color: 'text-blue-400' },
@@ -115,8 +128,8 @@ const Dashboard = () => {
           <div className="text-center md:text-left">
             <div className="flex items-center space-x-3 mb-2 justify-center md:justify-start">
                <span className="flex items-center space-x-2 px-3 py-1 bg-green-500/10 text-green-400 text-[8px] font-black uppercase tracking-widest rounded-full border border-green-500/20">
-                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                  <span>Network Live: Identity Synced</span>
+                  <span className={`w-1.5 h-1.5 bg-green-500 rounded-full ${isUserOnline(user?._id || user?.id) ? 'animate-pulse' : 'opacity-40'}`}></span>
+                  <span>{isUserOnline(user?._id || user?.id) ? 'Network Live: Node Authorized' : 'Network Standby'}</span>
                </span>
                <span className="flex items-center space-x-2 px-3 py-1 bg-primary-600/10 text-primary-400 text-[8px] font-black uppercase tracking-widest rounded-full border border-primary-500/20">
                   <Shield size={10} className="animate-pulse" />
@@ -259,12 +272,17 @@ const Dashboard = () => {
                                {activeBuddiesList.map(buddy => (
                                    <div key={buddy._id} className="glass-card p-8 border-white/5 group hover:border-primary-500/20 transition-all rounded-[2rem] shadow-xl flex items-center justify-between">
                                       <div className="flex items-center space-x-6">
-                                          <Link to={`/buddy/${buddy._id}`} className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center font-black text-xl text-blue-400 border border-blue-500/20 shadow-inner hover:scale-105 transition-transform cursor-pointer">
-                                              {buddy.name?.[0]}
-                                          </Link>
+                                          <div className="relative">
+                                               <Link to={`/buddy/${buddy._id}`} className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center font-black text-xl text-blue-400 border border-blue-500/20 shadow-inner hover:scale-105 transition-transform cursor-pointer">
+                                                   {buddy.name?.[0]}
+                                               </Link>
+                                               {(isUserOnline(buddy._id) || buddy.isOnline) && (
+                                                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-4 border-background-dark rounded-full shadow-lg"></div>
+                                               )}
+                                          </div>
                                           <div>
                                               <Link to={`/buddy/${buddy._id}`} className="font-black uppercase text-sm tracking-tight hover:text-primary-400 transition-colors leading-none block mb-1.5">{buddy.name}</Link>
-                                              <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest italic">{buddy.isProvider ? 'PROVIDER' : 'CONSUMER'}</p>
+                                              <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest italic">{isUserOnline(buddy._id) || buddy.isOnline ? 'ACTIVE NODE' : 'OFFLINE'}</p>
                                           </div>
                                       </div>
                                       <Link to="/messages" className="p-4 bg-white/5 hover:bg-primary-600/20 text-gray-500 hover:text-primary-400 rounded-2xl transition-all border border-white/5 hover:border-primary-500/20 shadow-xl"><Send size={18} /></Link>
@@ -327,16 +345,20 @@ const Dashboard = () => {
                                       
                                       {!isAuthor && (
                                         <button 
-                                          onClick={() => handleJoinCommunity(post._id)}
-                                          disabled={hasJoined}
-                                          className={`px-6 py-3 rounded-xl font-black uppercase text-[9px] tracking-widest flex items-center transition-all ${
+                                          onClick={() => hasJoined ? handleLeaveCommunity(post._id) : handleJoinCommunity(post._id)}
+                                          className={`px-6 py-3 rounded-xl font-black uppercase text-[9px] tracking-widest flex items-center transition-all group/btn ${
                                             hasJoined 
-                                              ? 'bg-green-500/10 text-green-500 border border-green-500/20 shadow-inner cursor-not-allowed'
+                                              ? 'bg-green-500/10 text-green-500 border border-green-500/20 shadow-inner hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20'
                                               : 'bg-primary-600 text-white hover:bg-primary-500 shadow-xl border border-primary-500'
                                           }`}
                                         >
                                           {hasJoined ? (
-                                            <><Check size={14} className="mr-2" /> Joined</>
+                                            <>
+                                              <Check size={14} className="mr-2 group-hover/btn:hidden" />
+                                              <X size={14} className="mr-2 hidden group-hover/btn:block" />
+                                              <span className="group-hover/btn:hidden">Joined</span>
+                                              <span className="hidden group-hover/btn:block">Leave Community</span>
+                                            </>
                                           ) : (
                                             <><Zap size={14} className="mr-2" /> Join Array</>
                                           )}
