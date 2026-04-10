@@ -244,7 +244,7 @@ const Messages = () => {
                            {conv.name}
                            {conv.isProvider && <Zap size={10} className="ml-2 text-primary-400" />}
                        </h4>
-                       <p className={`text-[8px] font-bold uppercase tracking-widest truncate ${activeChat?._id === conv._id ? 'text-white/60' : 'text-gray-600'}`}>
+                       <p className={`label-chat-sm truncate ${activeChat?._id === conv._id ? 'text-white/60' : 'text-gray-600'}`}>
                            {isUserOnline(conv._id) ? 'ACTIVE NODE' : 'OFFLINE'} · {conv.branch}
                        </p>
                     </div>
@@ -252,9 +252,9 @@ const Messages = () => {
                 ))
               ) : (
                 <div className="p-10 text-center opacity-30">
-                   <p className="text-[10px] font-black uppercase tracking-widest italic mb-2">No Verified Nodes</p>
+                   <p className="label-chat-md mb-2">No Verified Nodes</p>
                    <p className="text-[8px] font-bold uppercase tracking-tighter opacity-70 mb-6">Establish a buddy connection through the network to start syncing.</p>
-                   <Link to="/find-buddies" className="px-6 py-3 bg-primary-600/20 text-primary-400 rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-primary-600 hover:text-white transition-all">Search Network</Link>
+                   <Link to="/find-buddies" className="px-6 py-3 bg-primary-600/20 text-primary-400 rounded-xl label-chat-sm hover:bg-primary-600 hover:text-white transition-all">Search Network</Link>
                 </div>
               )}
            </div>
@@ -273,13 +273,13 @@ const Messages = () => {
                      <div className="ml-5">
                         <Link to={`/buddy/${activeChat._id}`} className="text-sm font-black uppercase tracking-tight leading-none mb-1.5 flex items-center hover:text-primary-400 transition-colors">
                             {activeChat.name}
-                            <span className={`ml-3 px-2 py-0.5 rounded-md text-[7px] border tracking-widest ${activeChat.isProvider ? 'bg-primary-600/10 text-primary-400 border-primary-500/20' : 'bg-gray-500/10 text-gray-400 border-gray-500/20'}`}>
+                            <span className={`ml-3 badge-theatrical ${activeChat.isProvider ? 'bg-primary-600/10 text-primary-400 border-primary-500/20' : 'bg-gray-500/10 text-gray-400 border-gray-500/20'}`}>
                                 {activeChat.isProvider ? 'PROVIDER NODE' : 'BUDDY NODE'}
                             </span>
                         </Link>
                         <div className="flex items-center">
                            <div className={`w-1.5 h-1.5 rounded-full mr-2 ${isUserOnline(activeChat._id) ? 'bg-green-500 animate-pulse' : 'bg-gray-600'}`}></div>
-                           <span className="text-[8px] font-black uppercase tracking-widest text-gray-500">
+                           <span className="label-chat-sm text-gray-500">
                              {isUserTyping(activeChat._id) ? <span className="text-primary-400 animate-pulse italic">Buddy is typing identity payload...</span> : (isUserOnline(activeChat._id) ? 'Direct Sync Live' : 'Node Disconnected')}
                            </span>
                         </div>
@@ -287,12 +287,12 @@ const Messages = () => {
                   </div>
                   <div className="flex items-center space-x-3">
                      {!socketConnected && (
-                       <div className="flex items-center space-x-2 px-3 py-1.5 bg-red-500/10 text-red-500 text-[8px] font-black uppercase tracking-widest rounded-full border border-red-500/20 shadow-lg animate-pulse">
+                       <div className="flex items-center space-x-2 status-pill-theatrical bg-red-500/10 text-red-500 border-red-500/20 animate-pulse">
                           <WifiOff size={10} />
                           <span>SYNC INTERRUPTED</span>
                        </div>
                      )}
-                     <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-blue-500/10 text-blue-400 text-[8px] font-black uppercase tracking-widest rounded-full border border-blue-500/20 shadow-lg">
+                     <div className="hidden sm:flex items-center space-x-2 status-pill-theatrical bg-blue-500/10 text-blue-400 border-blue-500/20">
                         <Lock size={10} />
                         <span>E2E ENCRYPTED</span>
                      </div>
@@ -303,7 +303,7 @@ const Messages = () => {
                {/* Messages */}
                <div className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar pb-32">
                   <div className="flex justify-center mb-12">
-                     <span className="text-[8px] font-black uppercase tracking-widest px-5 py-2 bg-primary-600/5 rounded-full text-primary-400 border border-primary-500/10 italic flex items-center shadow-inner">
+                     <span className="label-chat-sm px-5 py-2 bg-primary-600/5 rounded-full text-primary-400 border border-primary-500/10 italic flex items-center shadow-inner">
                         <Shield size={10} className="mr-2" /> Security Handshake Validated
                      </span>
                   </div>
@@ -321,7 +321,7 @@ const Messages = () => {
                                  {msg.content}
                               </div>
                               <div className="mt-2.5 flex items-center space-x-2 px-2">
-                                 <span className="text-[8px] font-black uppercase tracking-widest text-gray-600">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                 <span className="label-chat-sm text-gray-600">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                  {isOwn && getStatusIcon(msg.status)}
                               </div>
                            </div>

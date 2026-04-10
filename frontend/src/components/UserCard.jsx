@@ -50,11 +50,11 @@ const UserCard = ({ user: targetUser }) => {
       <Link to={`/buddy/${targetUser._id}`} className="text-xl font-black mb-1 group-hover:text-primary-400 transition-colors uppercase tracking-tight cursor-pointer">
          {targetUser.name}
       </Link>
-      <div className="flex items-center text-[10px] text-gray-400 mb-2 font-black uppercase tracking-widest opacity-70">
+      <div className="flex items-center label-dashboard-md text-gray-400 mb-2">
         <Briefcase size={12} className="mr-1 text-primary-400" />
         {targetUser.branch || 'Buddy'} · {targetUser.year || 'N/A'}
       </div>
-      <div className={`text-[8px] font-black uppercase tracking-[0.2em] mb-4 flex items-center ${isUserOnline(targetUser._id) || targetUser.isOnline ? 'text-green-500' : 'text-gray-600 opacity-50'}`}>
+      <div className={`label-chat-sm mb-4 flex items-center ${isUserOnline(targetUser._id) || targetUser.isOnline ? 'text-green-500' : 'text-gray-600 opacity-50'}`}>
         <span className={`w-1 h-1 rounded-full mr-1.5 ${isUserOnline(targetUser._id) || targetUser.isOnline ? 'bg-green-500 animate-pulse' : 'bg-gray-600'}`}></span>
         {isUserOnline(targetUser._id) || targetUser.isOnline ? 'Identity Active' : 'Node Offline'}
       </div>
@@ -67,7 +67,7 @@ const UserCard = ({ user: targetUser }) => {
 
       <div className="flex flex-wrap gap-2 mb-6 justify-center min-h-[60px]">
         {targetUser.skills && targetUser.skills.length > 0 ? targetUser.skills.map(skill => (
-          <span key={skill} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 hover:text-white transition-all">
+          <span key={skill} className="label-stats text-gray-400 hover:bg-white/10 hover:text-white transition-all">
             {skill}
           </span>
         )) : (

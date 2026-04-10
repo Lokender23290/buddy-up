@@ -160,7 +160,7 @@ const Profile = () => {
             </nav>
 
             <div className="glass-card p-8 border-yellow-500/20 bg-yellow-500/5">
-                <h4 className="text-[9px] font-black uppercase tracking-widest text-yellow-500 mb-4 flex items-center italic">
+                <h4 className="label-profile-md text-yellow-500 mb-4 flex items-center italic">
                     <AlertCircle size={12} className="mr-2" /> Compliance Alert
                 </h4>
                 <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter leading-relaxed italic">Your campus legacy is partially synced. Verify phone to unlock premium master ledger features.</p>
@@ -175,7 +175,7 @@ const Profile = () => {
                         <section className="glass-card p-10 md:p-12 relative overflow-hidden">
                             <div className="flex items-center justify-between mb-12">
                                 <div>
-                                    <h3 className="text-2xl font-black uppercase tracking-widest italic">Identity <span className="text-primary-400">Ledger</span></h3>
+                                    <h3 className="label-profile-lg">Identity <span className="text-primary-400">Ledger</span></h3>
                                     <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic mt-2">Manage your public campus authority nodes</p>
                                 </div>
                                 <button onClick={handleUpdateProfile} disabled={loading} className="btn-primary py-3 px-8 text-[10px] font-black uppercase tracking-widest flex items-center shadow-2xl">
@@ -188,7 +188,7 @@ const Profile = () => {
                                 <InputField label="Campus Username" icon={Rocket} value={formData.username} onChange={(v) => setFormData({...formData, username: v.toLowerCase().replace(/\s/g, '_')})} placeholder="unique_identifier" />
                                 
                                 <div className="md:col-span-2">
-                                    <label className="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-4 block italic ml-1">Identity Bio / Manifesto ({formData.bio.length}/500)</label>
+                                    <label className="label-profile-md">Identity Bio / Manifesto ({formData.bio.length}/500)</label>
                                     <textarea 
                                         maxLength={500}
                                         className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-6 text-xs font-bold focus:ring-2 focus:ring-primary-500 outline-none text-white italic min-h-[120px] shadow-inner transition-all"
@@ -220,12 +220,12 @@ const Profile = () => {
                         </section>
 
                         <section className="glass-card p-10 md:p-12">
-                             <h3 className="text-sm font-black uppercase tracking-widest mb-10 flex items-center italic">
+                             <h3 className="heading-profile-sm mb-10 flex items-center italic">
                                 <Phone size={16} className="mr-3 text-primary-400" /> Secure Contact Node
                              </h3>
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-2 opacity-60 grayscale cursor-not-allowed">
-                                    <label className="text-[9px] font-black uppercase tracking-widest text-gray-500 ml-1">Email Authority (Read Only)</label>
+                                    <label className="label-profile-md text-gray-500 ml-1">Email Authority (Read Only)</label>
                                     <div className="flex items-center bg-white/5 border border-white/10 rounded-2xl p-5 text-xs font-bold text-gray-400 italic">
                                         <Mail size={16} className="mr-4" /> {user.email}
                                     </div>
@@ -255,7 +255,7 @@ const Profile = () => {
                         <section className="glass-card p-10 md:p-12">
                              <div className="flex items-center justify-between mb-10">
                                 <div>
-                                    <h3 className="text-sm font-black uppercase tracking-widest italic flex items-center">
+                                    <h3 className="heading-profile-sm italic flex items-center">
                                         <Smartphone size={16} className="mr-3 text-primary-400" /> Multi-Factor Authorization
                                     </h3>
                                     <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic mt-2">Add secondary verification for ledger access</p>
@@ -270,7 +270,7 @@ const Profile = () => {
                         </section>
 
                         <section className="glass-card p-10 md:p-12 opacity-50">
-                            <h3 className="text-sm font-black uppercase tracking-widest mb-10 italic flex items-center">
+                            <h3 className="heading-profile-sm mb-10 italic flex items-center">
                                 <Monitor size={16} className="mr-3 text-primary-400" /> Active Session Mapping
                             </h3>
                             <div className="space-y-6">
@@ -360,14 +360,14 @@ const TabButton = ({ active, onClick, icon: Icon, label }) => (
         className={`w-full flex items-center p-5 rounded-2xl transition-all group ${active ? 'bg-primary-600 text-white shadow-xl translate-x-1' : 'text-gray-500 hover:bg-white/5 hover:text-white'}`}
     >
         <Icon size={18} className={`mr-4 transition-colors ${active ? 'text-white' : 'group-hover:text-primary-400'}`} />
-        <span className="text-[10px] font-black uppercase tracking-[0.2em]">{label}</span>
+        <span className="label-theatrical">{label}</span>
         {active && <ChevronRight size={14} className="ml-auto animate-pulse" />}
     </button>
 );
 
 const InputField = ({ label, icon: Icon, value, onChange, placeholder, type = "text", disabled = false }) => (
     <div className="space-y-2 group">
-        <label className="text-[9px] font-black uppercase tracking-widest text-gray-500 ml-1 transition-colors group-focus-within:text-primary-400">{label}</label>
+        <label className="label-profile-md text-gray-500 ml-1 transition-colors group-focus-within:text-primary-400">{label}</label>
         <div className="relative">
             <Icon className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-primary-400 transition-colors" size={16} />
             <input 
@@ -384,7 +384,7 @@ const InputField = ({ label, icon: Icon, value, onChange, placeholder, type = "t
 
 const SelectField = ({ label, icon: Icon, value, onChange, options }) => (
     <div className="space-y-2 group">
-        <label className="text-[9px] font-black uppercase tracking-widest text-gray-500 ml-1 transition-colors group-focus-within:text-primary-400">{label}</label>
+        <label className="label-profile-md text-gray-500 ml-1 transition-colors group-focus-within:text-primary-400">{label}</label>
         <div className="relative">
             <Icon className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-primary-400 transition-colors pointer-events-none" size={16} />
             <select 
@@ -411,7 +411,7 @@ const TagInput = ({ label, icon: Icon, tags, setTags, placeholder }) => {
 
     return (
         <div className="space-y-4 group">
-            <label className="text-[9px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-primary-400 transition-colors">{label}</label>
+            <label className="label-profile-md text-gray-500 ml-1 group-focus-within:text-primary-400 transition-colors">{label}</label>
             <div className="relative">
                 <Icon className="absolute left-5 top-7 -translate-y-1/2 text-gray-600 group-focus-within:text-primary-400 transition-colors" size={16} />
                 <div className="flex flex-wrap gap-2 p-4 pt-10 min-h-[100px] bg-white/5 border border-white/10 rounded-3xl shadow-inner focus-within:ring-2 focus-within:ring-primary-600 transition-all">

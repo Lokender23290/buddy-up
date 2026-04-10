@@ -42,6 +42,79 @@
     @apply bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-8 rounded-full border border-white/20 transition-all duration-300 transform hover:scale-105 active:scale-95;
   }
 
+  /* Theatrical Semantic Classes */
+  .label-theatrical {
+    @apply text-[10px] font-black uppercase tracking-[0.2em] italic;
+  }
+
+  .label-muted {
+    @apply text-gray-500 font-bold uppercase tracking-widest text-xs italic leading-relaxed opacity-60;
+  }
+
+  .label-stats {
+    @apply text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-white/5 border border-white/10 rounded-lg;
+  }
+
+  .heading-hero {
+    @apply text-6xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tighter uppercase;
+  }
+
+  .heading-section {
+    @apply text-4xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-none;
+  }
+
+  .text-manifesto {
+    @apply text-gray-400 font-bold italic uppercase tracking-widest leading-relaxed opacity-80;
+  }
+
+  .label-chat-sm {
+    @apply text-[8px] font-black uppercase tracking-widest;
+  }
+
+  .label-chat-md {
+    @apply text-[10px] font-black uppercase tracking-widest italic;
+  }
+
+  .status-pill-theatrical {
+    @apply flex items-center space-x-2 px-3 py-1.5 rounded-full border shadow-lg text-[8px] font-black uppercase tracking-widest;
+  }
+
+  .input-theatrical {
+    @apply w-full bg-white/5 border border-white/10 rounded-2xl py-4 transition-all outline-none focus:ring-2 focus:ring-primary-500 shadow-inner text-[10px] font-black uppercase tracking-widest;
+  }
+
+  .badge-theatrical {
+    @apply px-2 py-0.5 rounded-md text-[7px] border tracking-widest font-black;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .card-header {
+    @apply flex items-center justify-between mb-4;
+  }
+
+  .card-title {
+    @apply text-3xl font-black uppercase tracking-tight;
+  }
+
+  .icon-badge {
+    @apply w-16 h-16 rounded-3xl flex items-center justify-center mb-8 shadow-2xl transition-transform;
+  }
+
+  .action-card {
+    @apply glass-card p-12 relative overflow-hidden shadow-2xl h-full cursor-pointer transition-all;
+  }
+
+  .card-arrow {
+    @apply opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all;
+  }
+
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;

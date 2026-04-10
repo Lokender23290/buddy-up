@@ -25,14 +25,14 @@ const Home = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 shadow-2xl">
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 label-theatrical mb-8 shadow-2xl">
               <Zap size={14} className="mr-2 animate-pulse" /> The New Standard for Campus Connections
             </span>
-            <h1 className="text-6xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tighter uppercase">
+            <h1 className="heading-hero mb-8">
               Connect <span className="gradient-text italic">Smarter.</span><br/>
               Grow <span className="text-primary-500">Together.</span>
             </h1>
-            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-bold italic opacity-80 uppercase tracking-widest leading-relaxed">
+            <p className="text-manifesto text-lg md:text-xl max-w-2xl mx-auto mb-12">
               BuddyUp transforms your university experience by linking you with the perfect peers for any goal.
             </p>
 
@@ -59,7 +59,7 @@ const Home = () => {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-600/5 blur-[120px] rounded-full animate-pulse"></div>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24 max-w-3xl mx-auto">
-             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-none">The <span className="text-primary-500 italic">Ecosystem</span></h2>
+             <h2 className="heading-section">The <span className="text-primary-500 italic">Ecosystem</span></h2>
              <p className="text-gray-400 font-bold uppercase tracking-widest text-sm italic leading-relaxed">
                 BuddyUp is a dual-sided marketplace designed to bridge the skill gap on campus. Whether you have knowledge to share or a challenge to solve, we provide the infrastructure.
              </p>
@@ -69,21 +69,21 @@ const Home = () => {
             <Link to="/become-provider" className="block outline-none">
               <motion.div 
                 whileHover={{ scale: 1.02 }}
-                className="glass-card p-12 border-primary-500/20 relative group overflow-hidden shadow-2xl h-full cursor-pointer hover:border-primary-500 transition-all"
+                className="action-card group border-primary-500/20 hover:border-primary-500"
               >
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary-600/10 blur-3xl pointer-events-none group-hover:bg-primary-500/20 transition-all"></div>
-                <div className="w-16 h-16 bg-primary-600 rounded-3xl flex items-center justify-center mb-8 shadow-2xl rotate-6 group-hover:rotate-0 transition-transform">
+                <div className="icon-badge bg-primary-600 rotate-6 group-hover:rotate-0">
                    <Zap size={32} className="text-white" />
                 </div>
-                <div className="flex items-center justify-between mb-4">
-                   <h3 className="text-3xl font-black uppercase tracking-tight">Be A <span className="text-primary-400">Provider</span></h3>
-                   <ArrowRight className="text-primary-400 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" size={24} />
+                <div className="card-header">
+                   <h3 className="card-title">Be A <span className="text-primary-400">Provider</span></h3>
+                   <ArrowRight className="card-arrow text-primary-400" size={24} />
                 </div>
-                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs italic leading-relaxed mb-6">
+                <p className="label-muted mb-6">
                    Have a skill in React, Physics, or Graphic Design? List your expertise and help fellow students. As a provider, you can earn reputation credits or monetized rewards for the value you deliver to the campus community.
                 </p>
                 <div className="flex flex-wrap gap-2 opacity-50">
-                   {['Node.js', 'Calculus', 'UI Design', 'Marketing'].map(s => <span key={s} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest">{s}</span>)}
+                   {['Node.js', 'Calculus', 'UI Design', 'Marketing'].map(s => <span key={s} className="label-stats">{s}</span>)}
                 </div>
               </motion.div>
             </Link>
@@ -91,21 +91,21 @@ const Home = () => {
             <Link to="/find-buddies" className="block outline-none">
               <motion.div 
                 whileHover={{ scale: 1.02 }}
-                className="glass-card p-12 border-blue-500/20 relative group overflow-hidden shadow-2xl h-full cursor-pointer hover:border-blue-500 transition-all"
+                className="action-card group border-blue-500/20 hover:border-blue-500"
               >
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/10 blur-3xl pointer-events-none group-hover:bg-blue-500/20 transition-all"></div>
-                <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center mb-8 shadow-2xl -rotate-6 group-hover:rotate-0 transition-transform">
+                <div className="icon-badge bg-blue-600 -rotate-6 group-hover:rotate-0">
                    <Rocket size={32} className="text-white" />
                 </div>
-                <div className="flex items-center justify-between mb-4">
-                   <h3 className="text-3xl font-black uppercase tracking-tight">Be A <span className="text-blue-400">Consumer</span></h3>
-                   <ArrowRight className="text-blue-400 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" size={24} />
+                <div className="card-header">
+                   <h3 className="card-title">Be A <span className="text-blue-400">Consumer</span></h3>
+                   <ArrowRight className="card-arrow text-blue-400" size={24} />
                 </div>
-                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs italic leading-relaxed mb-6">
+                <p className="label-muted mb-6">
                    Struggling with a project or a complex subject? Search our network for verified buddies. Consume high-quality peer-to-peer services tailored to your university curriculum at a fraction of a tutor's cost.
                 </p>
                 <div className="flex flex-wrap gap-2 opacity-50">
-                   {['Exam prep', 'Code Review', 'Lab Help'].map(s => <span key={s} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest">{s}</span>)}
+                   {['Exam prep', 'Code Review', 'Lab Help'].map(s => <span key={s} className="label-stats">{s}</span>)}
                 </div>
               </motion.div>
             </Link>
@@ -203,11 +203,11 @@ const ValueCard = ({ icon: Icon, title, desc }) => (
     whileHover={{ y: -10 }}
     className="glass p-8 rounded-3xl group border-white/5 hover:border-primary-500/30 transition-all duration-300"
   >
-    <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-all shadow-2xl">
+    <div className="w-14 h-14 bg-white/5 rounded-2xl flex-center mb-6 text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-all shadow-2xl">
       <Icon size={28} />
     </div>
     <h3 className="text-lg font-black uppercase mb-3 tracking-tight">{title}</h3>
-    <p className="text-gray-500 leading-relaxed font-bold italic uppercase tracking-widest text-[9px] opacity-60">
+    <p className="label-muted text-[9px] opacity-60">
       {desc}
     </p>
   </motion.div>
@@ -225,10 +225,10 @@ const Step = ({ num, title, desc }) => (
 
 const ContactCard = ({ icon: Icon, label, value }) => (
    <div className="flex flex-col items-center text-center">
-      <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 border border-white/5">
+      <div className="w-16 h-16 bg-white/5 rounded-full flex-center mb-4 border border-white/5">
          <Icon className="text-primary-400" size={24} />
       </div>
-      <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-1">{label}</h4>
+      <h4 className="label-theatrical text-gray-500 mb-1">{label}</h4>
       <p className="text-sm font-black uppercase tracking-widest text-white">{value}</p>
    </div>
 );

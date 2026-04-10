@@ -127,17 +127,17 @@ const Dashboard = () => {
         <header className="flex flex-col md:flex-row items-center justify-between mb-16 animate-fade-in relative">
           <div className="text-center md:text-left">
             <div className="flex items-center space-x-3 mb-2 justify-center md:justify-start">
-               <span className="flex items-center space-x-2 px-3 py-1 bg-green-500/10 text-green-400 text-[8px] font-black uppercase tracking-widest rounded-full border border-green-500/20">
+               <span className="flex items-center space-x-2 px-3 py-1 bg-green-500/10 text-green-400 label-dashboard-sm rounded-full border border-green-500/20">
                   <span className={`w-1.5 h-1.5 bg-green-500 rounded-full ${isUserOnline(user?._id || user?.id) ? 'animate-pulse' : 'opacity-40'}`}></span>
                   <span>{isUserOnline(user?._id || user?.id) ? 'Network Live: Node Authorized' : 'Network Standby'}</span>
                </span>
-               <span className="flex items-center space-x-2 px-3 py-1 bg-primary-600/10 text-primary-400 text-[8px] font-black uppercase tracking-widest rounded-full border border-primary-500/20">
+               <span className="flex items-center space-x-2 px-3 py-1 bg-primary-600/10 text-primary-400 label-dashboard-sm rounded-full border border-primary-500/20">
                   <Shield size={10} className="animate-pulse" />
                   <span>Secure Session AES-256</span>
                </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black mb-1 uppercase tracking-tighter">Campus <span className="gradient-text tracking-widest">Dashboard</span></h1>
-            <p className="text-gray-400 font-bold italic opacity-70 uppercase tracking-widest text-xs">Welcome back, <span className="text-white font-bold">{user?.name || 'Buddy'}</span>!</p>
+            <h1 className="heading-dashboard-xl">Campus <span className="gradient-text tracking-widest">Dashboard</span></h1>
+            <p className="text-dashboard-sub">Welcome back, <span className="text-white font-bold">{user?.name || 'Buddy'}</span>!</p>
           </div>
           <div className="flex space-x-4 mt-8 md:mt-0">
              <button onClick={() => setIsModalOpen(true)} className="btn-primary py-4 px-10 shadow-2xl font-black uppercase text-[10px] tracking-widest flex items-center">
@@ -151,16 +151,16 @@ const Dashboard = () => {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[150] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
                <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="glass-card max-w-lg w-full p-12 border-primary-500/30 shadow-2xl">
                   <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-2xl font-black uppercase tracking-widest">New <span className="text-primary-400">Community</span></h2>
+                    <h2 className="heading-dashboard-lg">New <span className="text-primary-400">Community</span></h2>
                     <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-white transition-all"><X size={24} /></button>
                   </div>
                   <div className="space-y-8">
                      <div>
-                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3 block ml-1 italic">Community Purpose: Current Need</label>
+                        <label className="label-dashboard-md text-gray-400 mb-3 block ml-1 italic">Community Purpose: Current Need</label>
                         <input type="text" placeholder="e.g. Identity Sync for Physics Lab Data" className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-xs font-bold focus:ring-2 focus:ring-primary-500 outline-none text-white shadow-inner" value={broadcastData.title} onChange={(e) => setBroadcastData({...broadcastData, title: e.target.value})} />
                      </div>
                      <div>
-                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3 block ml-1 italic">Category</label>
+                        <label className="label-dashboard-md text-gray-400 mb-3 block ml-1 italic">Category</label>
                         <select className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-xs font-bold focus:ring-2 focus:ring-primary-500 outline-none appearance-none text-white shadow-inner" value={broadcastData.category} onChange={(e) => setBroadcastData({...broadcastData, category: e.target.value})}>
                            <option value="Study">Study Session</option>
                            <option value="Project">Project Collaboration</option>
@@ -226,7 +226,7 @@ const Dashboard = () => {
                        </h2>
                        {pendingBuddies.length === 0 ? (
                            <div className="glass p-20 rounded-[3rem] text-center border-dashed border-2 border-white/5 opacity-40">
-                              <p className="text-[10px] font-black uppercase tracking-widest italic leading-loose opacity-60">No pending identity sync requests identified.</p>
+                              <p className="label-dashboard-md italic leading-loose opacity-60">No pending identity sync requests identified.</p>
                            </div>
                        ) : (
                            <div className="space-y-6">
@@ -265,7 +265,7 @@ const Dashboard = () => {
                        </h2>
                        {activeBuddiesList.length === 0 ? (
                            <div className="glass p-20 rounded-[3rem] text-center border-dashed border-2 border-white/5 opacity-40">
-                              <p className="text-[10px] font-black uppercase tracking-widest italic leading-loose opacity-60">Your Identity matrix has no active buddy nodes.</p>
+                              <p className="label-dashboard-md italic leading-loose opacity-60">Your Identity matrix has no active buddy nodes.</p>
                            </div>
                        ) : (
                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-20">
@@ -308,14 +308,14 @@ const Dashboard = () => {
                             return (
                                 <div key={post._id} className="glass-card p-8 border-white/5 group hover:border-primary-500/20 transition-all rounded-[2rem] shadow-xl relative">
                                    <div className="flex justify-between items-start mb-6">
-                                      <span className="px-3 py-1 bg-primary-600/20 text-primary-400 text-[8px] font-black uppercase tracking-widest rounded-lg border border-primary-500/20 shadow-inner">
+                                      <span className="px-3 py-1 bg-primary-600/20 text-primary-400 label-dashboard-sm rounded-lg border border-primary-500/20 shadow-inner">
                                          {post.category}
                                       </span>
                                       
                                       <div className="flex items-center space-x-4">
                                           <span className="text-[8px] font-black text-gray-600 uppercase tracking-widest">{new Date(post.createdAt).toLocaleDateString()}</span>
                                           {isAuthor && (
-                                             <button onClick={() => handleDiscardBroadcast(post._id)} className="px-3 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 text-[8px] font-black uppercase tracking-widest rounded-lg border border-red-500/20 transition-colors shadow-inner flex items-center">
+                                             <button onClick={() => handleDiscardBroadcast(post._id)} className="px-3 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 label-dashboard-sm rounded-lg border border-red-500/20 transition-colors shadow-inner flex items-center">
                                                 <X size={10} className="mr-1" /> Discard
                                              </button>
                                           )}
@@ -330,11 +330,11 @@ const Dashboard = () => {
                                                  <div key={i} className="w-6 h-6 rounded-full bg-primary-600/20 border border-background-dark flex items-center justify-center text-[8px] font-black text-primary-400">U</div>
                                               ))}
                                            </div>
-                                           <span className="text-[8px] font-black uppercase tracking-widest text-gray-500">{post.members.length} {post.members.length === 1 ? 'Node' : 'Nodes'} Attached</span>
+                                           <span className="label-dashboard-sm text-gray-500">{post.members.length} {post.members.length === 1 ? 'Node' : 'Nodes'} Attached</span>
                                        </div>
                                    )}
 
-                                   <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/5">
+                                   <div className="flex-between mt-8 pt-6 border-t border-white/5">
                                       <div className="flex items-center space-x-4">
                                          <Link to={`/buddy/${post.author?._id}`} className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center font-black text-sm text-gray-500 border border-white/10 shadow-inner hover:scale-105 transition-transform">{post.author?.name?.[0]}</Link>
                                          <div>
@@ -396,7 +396,7 @@ const Dashboard = () => {
                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter leading-relaxed italic opacity-80 mb-4">
                                Providing: {Array.isArray(user?.skills) ? user.skills.join(', ') : (user?.skills || 'No Skills Listed')}
                            </p>
-                           <Link to="/become-provider" className="mt-6 block text-center py-4 bg-white/5 border border-white/10 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all shadow-2xl relative z-20">Expand Expertise</Link>
+                           <Link to="/become-provider" className="mt-6 block text-center py-4 bg-white/5 border border-white/10 text-white rounded-2xl label-dashboard-md hover:bg-white/10 transition-all shadow-2xl relative z-20">Expand Expertise</Link>
                        </div>
                    ) : (
                        <div className="relative z-10">
@@ -404,7 +404,7 @@ const Dashboard = () => {
                              <Star size={14} className="mr-2" /> Provider Perk
                            </h4>
                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter leading-relaxed italic opacity-80">Enable provider authority to monetize your campus expertise legacy.</p>
-                           <Link to="/become-provider" className="mt-8 block text-center py-4 bg-primary-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary-500 transition-all shadow-2xl hover:shadow-primary-600/40 relative z-20">Enable Pro Authority</Link>
+                           <Link to="/become-provider" className="mt-8 block text-center py-4 bg-primary-600 text-white rounded-2xl label-dashboard-md hover:bg-primary-500 transition-all shadow-2xl hover:shadow-primary-600/40 relative z-20">Enable Pro Authority</Link>
                        </div>
                    )}
                 </div>
@@ -417,17 +417,17 @@ const Dashboard = () => {
 const QuickLink = ({ icon: Icon, label, href }) => (
     <Link to={href} className="flex items-center p-5 bg-white/5 hover:bg-primary-600/15 border border-white/5 hover:border-primary-500/30 rounded-3xl transition-all group w-full shadow-lg">
         <Icon size={22} className="text-gray-600 group-hover:text-primary-400 transition-colors mr-5" />
-        <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-white">{label}</span>
+        <span className="label-dashboard-md text-gray-400 group-hover:text-white">{label}</span>
     </Link>
 );
 
 const TaskItem = ({ done, label, href }) => (
-  <Link to={href} className="flex items-center justify-between p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all group border border-transparent hover:border-white/5 shadow-xl">
+  <Link to={href} className="flex-between p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all group border border-transparent hover:border-white/5 shadow-xl">
      <div className="flex items-center space-x-4">
         <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all ${done ? 'bg-green-500 border-green-400 shadow-[0_0_15px_rgba(34,197,94,0.4)]' : 'border-white/20'}`}>
            {done && <Check size={12} className="text-white" />}
         </div>
-        <span className={`text-[10px] font-black uppercase tracking-widest ${done ? 'text-gray-500' : 'text-gray-300'}`}>{label}</span>
+        <span className={`label-dashboard-md ${done ? 'text-gray-500' : 'text-gray-300'}`}>{label}</span>
      </div>
      {!done && <ArrowRight size={16} className="text-primary-400 group-hover:translate-x-1 transition-transform" />}
   </Link>
