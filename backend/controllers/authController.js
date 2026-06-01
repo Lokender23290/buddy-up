@@ -257,7 +257,7 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const allowedUpdates = ['name', 'bio', 'skills', 'interests', 'college', 'branch', 'year', 'isProvider', 'hourlyRate', 'providerCategory', 'username', 'location', 'lookingFor', 'availability', 'otpEnabled', 'preferences'];
+    const allowedUpdates = ['name', 'bio', 'skills', 'interests', 'college', 'branch', 'year', 'isProvider', 'hourlyRate', 'providerCategory', 'username', 'location', 'lookingFor', 'availability', 'otpEnabled', 'preferences', 'additionalServices'];
     const updates = {};
     Object.keys(req.body).forEach(key => { if (allowedUpdates.includes(key)) updates[key] = req.body[key]; });
 

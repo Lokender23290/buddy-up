@@ -76,7 +76,13 @@ const Home = () => {
                    <Zap size={32} className="text-white" />
                 </div>
                 <div className="card-header">
-                   <h3 className="card-title">Be A <span className="text-primary-400">Provider</span></h3>
+                   <h3 className="card-title">
+                     {user?.isProvider ? (
+                       <>Provide <span className="text-primary-400">More</span></>
+                     ) : (
+                       <>Be A <span className="text-primary-400">Provider</span></>
+                     )}
+                   </h3>
                    <ArrowRight className="card-arrow text-primary-400" size={24} />
                 </div>
                 <p className="label-muted mb-6">

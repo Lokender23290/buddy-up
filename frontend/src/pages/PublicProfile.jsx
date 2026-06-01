@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Briefcase, Calendar, CheckCircle, Shield, Loader, User, Zap, ArrowLeft, Star, MessageSquare } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import ReviewSection from '../components/ReviewSection';
 
 const PublicProfile = () => {
   const { id } = useParams();
@@ -204,6 +205,12 @@ const PublicProfile = () => {
                      </div>
                   </div>
               </div>
+
+              {profileUser.isProvider && (
+                  <div className="mt-8 border-t border-white/5 pt-8">
+                      <ReviewSection providerId={profileUser._id} />
+                  </div>
+              )}
            </div>
         </div>
       </div>

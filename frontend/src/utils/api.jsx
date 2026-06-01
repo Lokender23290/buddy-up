@@ -55,4 +55,9 @@ export const postAPI = {
   leavePost: (id) => api.put(`/posts/${id}/leave`),
 };
 
+export const reviewAPI = {
+  createReview: (data) => api.post('/reviews', data),
+  getProviderReviews: (providerId) => api.get(`/reviews/${providerId}`)
+};
+
 export default api;

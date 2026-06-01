@@ -115,6 +115,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  additionalServices: [{
+    type: mongoose.Schema.Types.Mixed,
+  }],
+  ratingStatistics: {
+    averageRating: { type: Number, default: 0 },
+    totalReviews: { type: Number, default: 0 }
+  },
   walletBalance: {
     type: Number,
     default: 0,

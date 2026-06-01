@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Mail, Briefcase, PlusCircle, CheckCircle, Clock, DollarSign } from 'lucide-react';
+import { Mail, Briefcase, PlusCircle, CheckCircle, Clock, DollarSign, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 import { toast } from 'react-hot-toast';
@@ -59,9 +59,19 @@ const UserCard = ({ user: targetUser }) => {
         {isUserOnline(targetUser._id) || targetUser.isOnline ? 'Identity Active' : 'Node Offline'}
       </div>
 
-      {targetUser.isProvider && targetUser.hourlyRate > 0 && (
-        <div className="mb-4 inline-flex items-center bg-primary-600/10 border border-primary-500/20 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest text-primary-400">
-          <DollarSign size={10} className="mr-1" /> ₹{targetUser.hourlyRate}/session
+      {targetUser.isProvider && (
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+          {targetUser.hourlyRate > 0 && (
+            <div className="inline-flex items-center bg-primary-600/10 border border-primary-500/20 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest text-primary-400 shadow-sm">
+              <DollarSign size={10} className="mr-1" /> ₹{targetUser.hourlyRate}/session
+            </div>
+          )}
+          {targetUser.ratingStatistics?.totalReviews > 0 && (
+            <div className="inline-flex items-center bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest text-yellow-500 shadow-sm">
+              <Star size={10} className="mr-1 fill-yellow-500" /> 
+              {targetUser.ratingStatistics.averageRating} ({targetUser.ratingStatistics.totalReviews})
+            </div>
+          )}
         </div>
       )}
 

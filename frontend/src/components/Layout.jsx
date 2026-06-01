@@ -7,8 +7,11 @@ import { useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 const Layout = ({ children }) => {
+  const location = useLocation();
+  const isMessages = location.pathname.startsWith('/messages');
+
   return (
-    <div className="min-h-screen bg-background-dark/95 selection:bg-primary-500 selection:text-white">
+    <div className={`bg-background-dark/95 selection:bg-primary-500 selection:text-white ${isMessages ? 'h-screen overflow-hidden flex flex-col' : 'min-h-screen'}`}>
       <Toaster 
         position="top-right"
         toastOptions={{
@@ -25,7 +28,7 @@ const Layout = ({ children }) => {
         }}
       />
       <Navbar />
-      <main className="pt-24 pb-40 px-6 max-w-7xl mx-auto">
+      <main className={`pt-24 max-w-7xl mx-auto ${isMessages ? 'px-0 flex-1 h-[calc(100vh-96px)] w-full' : 'pb-40 px-6'}`}>
         {children}
       </main>
     </div>

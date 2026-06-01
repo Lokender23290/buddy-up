@@ -24,6 +24,7 @@ const authRoutes = require('./routes/auth');
 const walletRoutes = require('./routes/wallet');
 const messageRoutes = require('./routes/message');
 const postRoutes = require('./routes/post');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Global Error Handler (MUST BE LAST)
 app.use(errorHandler);

@@ -20,12 +20,17 @@ const Messages = () => {
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
   // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
-        textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+        if (!message) {
+           textareaRef.current.style.height = '64px';
+        } else {
+           textareaRef.current.style.height = 'auto';
+           textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+        }
     }
   }, [message]);
 
@@ -37,7 +42,12 @@ const Messages = () => {
   }, [activeChat]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+       scrollContainerRef.current.scrollTo({
+           top: scrollContainerRef.current.scrollHeight,
+           behavior: 'smooth'
+       });
+    }
   };
 
   useEffect(() => {
@@ -202,11 +212,11 @@ const Messages = () => {
   };
 
   return (
-    <div className="h-full px-6">
-      <div className="max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col md:flex-row gap-6 pb-10">
+    <div className="h-full px-6 w-full">
+      <div className="max-w-7xl mx-auto h-full flex flex-col md:flex-row gap-6 pb-6">
         
         {/* Sidebar */}
-        <div className="w-full md:w-80 lg:w-96 flex flex-col glass-card border-white/5 p-0 overflow-hidden shadow-2xl backdrop-blur-3xl">
+        <div className="w-full md:w-80 lg:w-96 flex flex-col glass-card border-white/5 p-0 overflow-hidden shadow-2xl backdrop-blur-3xl min-h-0">
            <div className="p-8 border-b border-white/5 bg-white/5">
               <h2 className="text-xl font-black uppercase tracking-widest mb-6 flex items-center">
                  <MessageSquare size={18} className="mr-3 text-primary-400" /> Identity <span className="text-primary-400 ml-2">Inbox</span>
@@ -261,7 +271,7 @@ const Messages = () => {
         </div>
 
         {/* Chat Window */}
-        <div className="flex-1 flex flex-col glass-card border-white/5 p-0 overflow-hidden shadow-2xl relative backdrop-blur-3xl">
+        <div className="flex-1 flex flex-col glass-card border-white/5 p-0 overflow-hidden shadow-2xl relative backdrop-blur-3xl min-h-0">
            {activeChat ? (
              <>
                {/* Header */}
@@ -301,7 +311,7 @@ const Messages = () => {
                </div>
 
                {/* Messages */}
-               <div className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar pb-32">
+               <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar min-h-0">
                   <div className="flex justify-center mb-12">
                      <span className="label-chat-sm px-5 py-2 bg-primary-600/5 rounded-full text-primary-400 border border-primary-500/10 italic flex items-center shadow-inner">
                         <Shield size={10} className="mr-2" /> Security Handshake Validated
@@ -332,7 +342,7 @@ const Messages = () => {
                </div>
 
                {/* Input */}
-               <div className="p-8 border-t border-white/5 absolute bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-2xl">
+               <div className="p-8 border-t border-white/5 bg-background-dark/80 backdrop-blur-2xl shrink-0 mt-auto z-10 relative">
                   {isUserTyping(activeChat._id) && (
                       <div className="absolute -top-10 left-10 flex items-center space-x-2 text-[8px] font-black uppercase text-primary-400/60 italic tracking-[0.2em] bg-primary-900/10 px-4 py-2 rounded-full border border-primary-500/10 backdrop-blur-md">
                           <Loader size={10} className="animate-spin" />
