@@ -38,11 +38,14 @@ exports.googleAuth = async (req, res, next) => {
         user = await User.create({
             name, 
             email, 
-            phone: `GGL_${sub.substring(0, 8)}`, 
+            phone: `GGL_${sub}`, 
             password: randomPassword,
             emailVerified: true,
             phoneVerified: true
         });
+    } else if (!user.emailVerified) {
+        user.emailVerified = true;
+        await user.save();
     }
 
     const token = generateToken(user._id);
