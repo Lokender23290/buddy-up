@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://api.buddyup.co.in/api/:path*"
+      "destination": "https://buddy-up.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
