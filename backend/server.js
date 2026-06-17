@@ -51,6 +51,10 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
+app.get('/', (req, res) => {
+  res.send('BuddyUp Backend Running 🚀');
+});
+
 app.use(express.json());
 
 // Request Audit Logger
