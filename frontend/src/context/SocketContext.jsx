@@ -14,7 +14,8 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (token && (user?._id || user?.id)) {
-            const socketUrl = import.meta.env.VITE_BACKEND_URL || (window.location.protocol + '//' + window.location.hostname + ':5001');
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const socketUrl = import.meta.env.VITE_BACKEND_URL || (isLocal ? 'http://localhost:5001' : 'https://buddy-up.onrender.com');
             console.log(`[SOCKET] Establishing bridge to ${socketUrl}...`);
             
             const newSocket = io(socketUrl, {

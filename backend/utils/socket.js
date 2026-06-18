@@ -8,7 +8,9 @@ const userSocketMap = new Map(); // userId -> socketId
 const initSocket = (server) => {
   const io = socketIO(server, {
     cors: {
-      origin: process.env.FRONTEND_URL || "http://localhost:3000",
+      origin: process.env.FRONTEND_URL 
+        ? [process.env.FRONTEND_URL, "http://localhost:3000", "http://localhost:5173"] 
+        : (origin, callback) => callback(null, true),
       methods: ["GET", "POST"]
     }
   });
